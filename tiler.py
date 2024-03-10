@@ -47,7 +47,7 @@ def extract_archive(disk, tarball):
 
     print("Mounting file system")
     run_command(
-        ["mount", f"{disk}p2", rootfs])
+        ["mount", f"{disk}2", rootfs])
 
     efi = rootfs.joinpath("efi")
     run_command(
