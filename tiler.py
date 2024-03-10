@@ -29,9 +29,9 @@ def create_filesystem(disk):
 
     print("Formatting EFI filesytem.")
     run_command(
-        ["mkfs.vfat", "-F32", "-n", "EFI",  f"{disk}p1"])
+        ["mkfs.vfat", "-F32", "-n", "EFI",  f"{disk}1"])
     run_command(
-        ["mkfs", "-t", "ext4", "-L", "ROOT", f"{disk}p2"])
+        ["mkfs", "-t", "ext4", "-L", "ROOT", f"{disk}2"])
 
 def create_workspace():
     return pathlib.Path("/var/tmp/tiler")
@@ -64,9 +64,9 @@ def install_bootloader(disk):
 
     print("Installting boot loader.")
     run_command(
-        ["mount", f"{disk}p2", rootfs])
+        ["mount", f"{disk}2", rootfs])
     run_command(
-        ["mount", f"{disk}p1", efi])
+        ["mount", f"{disk}1", efi])
 
     print("Configuring kernel")
     kernel_conf = rootfs.joinpath("etc/kernel/cmdline")
@@ -79,9 +79,9 @@ def install_bootloader(disk):
         ["kernel-install", "add","6.1.0-18-amd64", "/boot/vmlinuz-6.1.0-18-amd64"], rootfs)
 
     run_command(
-        ["umount", f"{disk}p1", efi])
+        ["umount", f"{disk}1", efi])
     run_command(
-        ["umount", f"{disk}p2", rootfs])
+        ["umount", f"{disk}2", rootfs])
 
 
 def parse_args():
